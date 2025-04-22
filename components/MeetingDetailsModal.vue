@@ -1,14 +1,17 @@
 <template>
-  <div v-if="show" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+  <div
+    v-if="show && meeting"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+  >
     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-2xl w-full overflow-hidden">
       <!-- Header -->
       <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
         <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
           {{ meeting.title }}
         </h3>
-        <button 
-          @click="$emit('close')"
+        <button
           class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
+          @click="$emit('close')"
         >
           ✕
         </button>
@@ -28,15 +31,23 @@
           </div>
 
           <!-- Description -->
-          <div v-if="meeting.description" class="text-gray-600 dark:text-gray-300">
+          <div
+            v-if="meeting.description"
+            class="text-gray-600 dark:text-gray-300"
+          >
             <p>{{ meeting.description }}</p>
           </div>
 
           <!-- Attendee Information -->
           <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 space-y-3">
-            <h4 class="font-medium text-gray-900 dark:text-white">Participant</h4>
-            
-            <div v-if="meeting.attendees?.[0]" class="space-y-2">
+            <h4 class="font-medium text-gray-900 dark:text-white">
+              Participant
+            </h4>
+
+            <div
+              v-if="meeting.attendees?.[0]"
+              class="space-y-2"
+            >
               <div class="flex items-center space-x-2">
                 <span class="w-5">👤</span>
                 <span class="text-gray-700 dark:text-gray-300">{{ meeting.attendees[0].name }}</span>
@@ -45,7 +56,10 @@
                 <span class="w-5">✉️</span>
                 <span class="text-gray-700 dark:text-gray-300">{{ meeting.attendees[0].email }}</span>
               </div>
-              <div v-if="meeting.responses?.attendeePhoneNumber" class="flex items-center space-x-2">
+              <div
+                v-if="meeting.responses?.attendeePhoneNumber"
+                class="flex items-center space-x-2"
+              >
                 <span class="w-5">📱</span>
                 <span class="text-gray-700 dark:text-gray-300">{{ meeting.responses.attendeePhoneNumber }}</span>
               </div>
@@ -53,8 +67,11 @@
           </div>
 
           <!-- Meeting Link -->
-          <div v-if="meeting.meetingUrl" class="mt-6">
-            <a 
+          <div
+            v-if="meeting.meetingUrl"
+            class="mt-6"
+          >
+            <a
               :href="meeting.meetingUrl"
               target="_blank"
               rel="noopener noreferrer"
@@ -73,9 +90,9 @@
 <script setup lang="ts">
 import type { Booking } from '~/types/calendar';
 
-const props = defineProps<{
+defineProps<{
   show: boolean;
-  meeting: Booking;
+  meeting: Booking | null;
 }>();
 
 defineEmits<{
@@ -87,14 +104,14 @@ const formatDate = (dateStr: string) => {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
-    year: 'numeric'
+    year: 'numeric',
   }).format(new Date(dateStr));
 };
 
 const formatTime = (dateStr: string) => {
   return new Intl.DateTimeFormat('fr-FR', {
     hour: '2-digit',
-    minute: '2-digit'
+    minute: '2-digit',
   }).format(new Date(dateStr));
 };
 

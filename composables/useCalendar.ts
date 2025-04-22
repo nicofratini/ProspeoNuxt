@@ -22,37 +22,37 @@ export function useCalendar() {
       // Only add date filters if not showing all bookings
       if (selectedPeriod.value !== 'all') {
         const now = new Date();
-        
+
         switch (selectedPeriod.value) {
           case 'today': {
             const startOfDay = new Date(now);
             startOfDay.setHours(0, 0, 0, 0);
             const endOfDay = new Date(now);
             endOfDay.setHours(23, 59, 59, 999);
-            
+
             params.set('after', startOfDay.toISOString());
             params.set('before', endOfDay.toISOString());
             break;
           }
-          
+
           case 'week': {
             const startOfWeek = new Date(now);
             startOfWeek.setDate(now.getDate() - now.getDay() + (now.getDay() === 0 ? -6 : 1));
             startOfWeek.setHours(0, 0, 0, 0);
-            
+
             const endOfWeek = new Date(startOfWeek);
             endOfWeek.setDate(startOfWeek.getDate() + 6);
             endOfWeek.setHours(23, 59, 59, 999);
-            
+
             params.set('after', startOfWeek.toISOString());
             params.set('before', endOfWeek.toISOString());
             break;
           }
-          
+
           case 'month': {
             const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
             const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
-            
+
             params.set('after', startOfMonth.toISOString());
             params.set('before', endOfMonth.toISOString());
             break;
@@ -73,24 +73,26 @@ export function useCalendar() {
       }
 
       const response = await fetch(url);
-      
+
       if (!response.ok) {
         throw new Error('Failed to fetch bookings');
       }
 
       const data = await response.json();
       bookings.value = data;
-    } catch (e) {
+    }
+    catch (e) {
       error.value = e instanceof Error ? e.message : 'An error occurred';
       bookings.value = [];
-    } finally {
+    }
+    finally {
       loading.value = false;
     }
   };
 
   const getMeetingUrl = (bookingId: string): string | null => {
     const booking = bookings.value.find(b => b.id === bookingId);
-    return booking?.meetingUrl || null;
+    return booking?.meetingUrl?.indexOf('+') === 0 ? `tel:${booking?.meetingUrl}` : booking?.meetingUrl || null;
   };
 
   return {

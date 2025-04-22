@@ -5,17 +5,26 @@
         {{ t("common.appName") }}
       </h1>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-        <NuxtLink to="/calendar" class="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+        <NuxtLink
+          to="/calendar"
+          class="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow"
+        >
           <h2 class="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-4">Calendar</h2>
           <p class="text-gray-600 dark:text-gray-300">Manage your schedule and appointments</p>
         </NuxtLink>
-        
-        <NuxtLink to="/conversation" class="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+
+        <NuxtLink
+          to="/conversation"
+          class="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow"
+        >
           <h2 class="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-4">Conversation</h2>
           <p class="text-gray-600 dark:text-gray-300">Start a new conversation</p>
         </NuxtLink>
-        
-        <NuxtLink to="/database" class="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+
+        <NuxtLink
+          to="/database"
+          class="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow"
+        >
           <h2 class="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-4">Database</h2>
           <p class="text-gray-600 dark:text-gray-300">Access and manage your data</p>
         </NuxtLink>

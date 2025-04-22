@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   try {
     // Build URL with query parameters
     const url = new URL('https://api.cal.com/v2/bookings');
-    
+
     // Add pagination parameters to get all bookings
     url.searchParams.append('limit', '100');
     url.searchParams.append('page', '1');
@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
         'Authorization': `Bearer ${CAL_KEY}`,
         'Content-Type': 'application/json',
         'cal-api-version': CAL_API_VERSION,
-      }
+      },
     });
 
     if (!response.ok) {
@@ -42,7 +42,7 @@ export default defineEventHandler(async (event) => {
       console.error('[API /api/cal/bookings] Cal.com API error:', {
         status: response.status,
         statusText: response.statusText,
-        error: errorText
+        error: errorText,
       });
 
       throw createError({
@@ -52,7 +52,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const data = await response.json();
-    
+
     // Add cache control headers
     event.node.res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
     event.node.res.setHeader('Pragma', 'no-cache');
@@ -75,8 +75,8 @@ export default defineEventHandler(async (event) => {
       responses: booking.bookingFieldsResponses || {},
       meetingUrl: booking.meetingUrl || booking.location || null,
     }));
-
-  } catch (err: any) {
+  }
+  catch (err: any) {
     console.error('[API /api/cal/bookings] Error:', err);
 
     throw createError({

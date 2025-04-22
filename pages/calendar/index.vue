@@ -4,12 +4,15 @@
       <h1 class="text-4xl font-bold bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent">
         {{ $t('calendar.title') }}
       </h1>
-      <button 
+      <button
         class="bg-gradient-to-r from-primary-600 to-secondary-500 hover:from-primary-700 hover:to-secondary-600 text-white px-6 py-2.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
-        @click="refreshData"
         :disabled="loading"
+        @click="refreshData"
       >
-        <span v-if="loading" class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></span>
+        <span
+          v-if="loading"
+          class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"
+        />
         <span>{{ loading ? $t('conversation.loading') : $t('conversation.refresh') }}</span>
       </button>
     </div>
@@ -18,32 +21,48 @@
     <div class="mb-6 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-md">
       <div class="flex items-center space-x-4">
         <label class="text-gray-700 dark:text-gray-300 font-medium">Période :</label>
-        <select 
+        <select
           v-model="selectedPeriod"
           class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
           @change="handlePeriodChange"
         >
-          <option value="all">Tous les rendez-vous</option>
-          <option value="past">Rendez-vous passés</option>
-          <option value="upcoming">Rendez-vous à venir</option>
-          <option value="today">Aujourd'hui</option>
-          <option value="week">Cette semaine</option>
-          <option value="month">Ce mois</option>
+          <option value="all">
+            Tous les rendez-vous
+          </option>
+          <option value="past">
+            Rendez-vous passés
+          </option>
+          <option value="upcoming">
+            Rendez-vous à venir
+          </option>
+          <option value="today">
+            Aujourd'hui
+          </option>
+          <option value="week">
+            Cette semaine
+          </option>
+          <option value="month">
+            Ce mois
+          </option>
         </select>
       </div>
     </div>
 
-    <div v-if="error" 
-         class="mb-8 p-6 bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 rounded-2xl shadow-sm">
+    <div
+      v-if="error"
+      class="mb-8 p-6 bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 rounded-2xl shadow-sm"
+    >
       <div class="flex items-center space-x-3">
         <div class="flex-shrink-0 w-10 h-10 bg-red-100 dark:bg-red-800 rounded-full flex items-center justify-center">
           <span class="text-red-600 dark:text-red-200 text-xl">!</span>
         </div>
         <div class="flex-1">
-          <p class="font-medium">{{ error }}</p>
-          <button 
-            @click="refreshData"
+          <p class="font-medium">
+            {{ error }}
+          </p>
+          <button
             class="mt-2 text-sm text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 underline hover:no-underline transition-colors"
+            @click="refreshData"
           >
             Try again
           </button>
@@ -51,40 +70,51 @@
       </div>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700">
+    <div
+      class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700"
+    >
       <div class="p-8">
         <div class="flex items-center justify-between mb-8">
           <h2 class="text-2xl font-semibold text-gray-900 dark:text-white flex items-center space-x-2">
             <span>{{ $t('calendar.upcoming') }}</span>
-            <span class="text-sm bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 px-3 py-1 rounded-full">
+            <span
+              class="text-sm bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 px-3 py-1 rounded-full"
+            >
               {{ bookings.length }}
             </span>
           </h2>
           <div class="flex space-x-4">
-            <button 
-              @click="viewMode = 'list'"
+            <button
               class="px-3 py-1.5 rounded-lg transition-colors"
               :class="viewMode === 'list' ? 'bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'"
+              @click="viewMode = 'list'"
             >
               Liste
             </button>
-            <button 
-              @click="viewMode = 'calendar'"
+            <button
               class="px-3 py-1.5 rounded-lg transition-colors"
               :class="viewMode === 'calendar' ? 'bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'"
+              @click="viewMode = 'calendar'"
             >
               Calendrier
             </button>
           </div>
         </div>
 
-        <div v-if="loading" class="flex justify-center items-center py-12">
-          <div class="animate-spin rounded-full h-12 w-12 border-3 border-primary-600 border-t-transparent"></div>
+        <div
+          v-if="loading"
+          class="flex justify-center items-center py-12"
+        >
+          <div class="animate-spin rounded-full h-12 w-12 border-3 border-primary-600 border-t-transparent" />
         </div>
 
-        <div v-else-if="bookings.length === 0" 
-             class="text-center py-12 px-4">
-          <div class="text-gray-400 dark:text-gray-500 text-6xl mb-4">📅</div>
+        <div
+          v-else-if="bookings.length === 0"
+          class="text-center py-12 px-4"
+        >
+          <div class="text-gray-400 dark:text-gray-500 text-6xl mb-4">
+            📅
+          </div>
           <p class="text-gray-600 dark:text-gray-300 text-lg">
             {{ $t('calendar.noEvents') }}
           </p>
@@ -92,16 +122,25 @@
 
         <div v-else>
           <!-- List View -->
-          <div v-if="viewMode === 'list'" class="space-y-6">
-            <div v-for="group in groupedMeetings" :key="group.date" class="space-y-4">
+          <div
+            v-if="viewMode === 'list'"
+            class="space-y-6"
+          >
+            <div
+              v-for="group in groupedMeetings"
+              :key="group.date"
+              class="space-y-4"
+            >
               <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-300 sticky top-0 bg-white dark:bg-gray-800 py-2">
                 {{ formatDate(group.date) }}
               </h3>
-              
-              <div v-for="meeting in group.meetings" 
-                   :key="meeting.id" 
-                   class="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-6 hover:shadow-lg transition-all duration-200 border border-gray-100 dark:border-gray-600 cursor-pointer"
-                   @click="showMeetingDetails(meeting)">
+
+              <div
+                v-for="meeting in group.meetings"
+                :key="meeting.id"
+                class="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-6 hover:shadow-lg transition-all duration-200 border border-gray-100 dark:border-gray-600 cursor-pointer"
+                @click="showMeetingDetails(meeting)"
+              >
                 <div class="flex justify-between items-start">
                   <div class="space-y-2">
                     <h4 class="text-xl font-semibold text-gray-900 dark:text-white">
@@ -131,8 +170,11 @@
                         {{ formatDuration(meeting.start, meeting.end) }}
                       </p>
                     </div>
-                    <div v-if="getMeetingUrl(meeting.id)" class="flex items-center">
-                      <a 
+                    <div
+                      v-if="getMeetingUrl(meeting.id)"
+                      class="flex items-center"
+                    >
+                      <a
                         :href="getMeetingUrl(meeting.id)"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -150,7 +192,9 @@
           </div>
 
           <!-- Calendar View -->
-          <div v-else class="h-[600px]">
+          <div
+            v-else
+          >
             <FullCalendar
               ref="calendar"
               :options="{
@@ -160,7 +204,7 @@
                 headerToolbar: {
                   left: 'prev,next today',
                   center: 'title',
-                  right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                  right: 'dayGridMonth,timeGridWeek,timeGridDay',
                 },
                 locale: 'fr',
                 firstDay: 1,
@@ -169,13 +213,13 @@
                   month: 'Mois',
                   week: 'Semaine',
                   day: 'Jour',
-                  list: 'Liste'
+                  list: 'Liste',
                 },
                 eventClick: handleEventClick,
                 eventTimeFormat: {
                   hour: '2-digit',
                   minute: '2-digit',
-                  hour12: false
+                  hour12: false,
                 },
                 slotMinTime: '08:00:00',
                 slotMaxTime: '20:00:00',
@@ -189,15 +233,15 @@
                 businessHours: {
                   daysOfWeek: [1, 2, 3, 4, 5],
                   startTime: '09:00',
-                  endTime: '18:00'
+                  endTime: '18:00',
                 },
                 scrollTime: '08:00:00',
                 views: {
                   timeGrid: {
                     dayMaxEventRows: 6,
-                    dayMinWidth: 200
-                  }
-                }
+                    dayMinWidth: 200,
+                  },
+                },
               }"
             />
           </div>
@@ -216,14 +260,12 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useI18n } from 'vue-i18n';
 import type { EventClickArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import type { Booking } from '~/types/calendar';
 
-const { t } = useI18n();
 const viewMode = ref<'list' | 'calendar'>('list');
 const { bookings, loading, error, selectedPeriod, fetchBookings, getMeetingUrl } = useCalendar();
 const calendar = ref(null);
@@ -239,35 +281,35 @@ const calendarEvents = computed(() => {
     extendedProps: {
       attendees: booking.attendees,
       responses: booking.responses,
-      meetingUrl: getMeetingUrl(booking.id)
-    }
+      meetingUrl: getMeetingUrl(booking.id),
+    },
   }));
 });
 
 // Group meetings by date for list view
 const groupedMeetings = computed(() => {
   const groups: { date: string; meetings: any[] }[] = [];
-  
-  bookings.value.forEach(meeting => {
+
+  bookings.value.forEach((meeting) => {
     const date = new Date(meeting.start);
     date.setHours(0, 0, 0, 0);
     const dateStr = date.toISOString();
-    
+
     let group = groups.find(g => g.date === dateStr);
     if (!group) {
       group = { date: dateStr, meetings: [] };
       groups.push(group);
     }
-    
+
     group.meetings.push(meeting);
   });
-  
+
   return groups;
 });
 
 // Event handlers
 const handleEventClick = (info: EventClickArg) => {
-  const meeting = bookings.value.find(b => b.id === info.event.id);
+  const meeting = bookings.value.find(b => parseInt(b.id) === parseInt(info.event.id));
   if (meeting) {
     showMeetingDetails(meeting);
   }
@@ -283,17 +325,17 @@ const handlePeriodChange = async () => {
 
 // Formatting helpers
 const formatDate = (dateStr: string) => {
-  return new Intl.DateTimeFormat('fr-FR', { 
+  return new Intl.DateTimeFormat('fr-FR', {
     weekday: 'long',
     day: 'numeric',
-    month: 'long'
+    month: 'long',
   }).format(new Date(dateStr));
 };
 
 const formatTime = (dateStr: string) => {
-  return new Intl.DateTimeFormat('fr-FR', { 
+  return new Intl.DateTimeFormat('fr-FR', {
     hour: '2-digit',
-    minute: '2-digit'
+    minute: '2-digit',
   }).format(new Date(dateStr));
 };
 
@@ -350,7 +392,7 @@ onMounted(() => {
     @apply rounded-lg shadow-md border-none;
   }
 
-  .fc-theme-standard td, 
+  .fc-theme-standard td,
   .fc-theme-standard th {
     @apply border-gray-200 dark:border-gray-700;
   }
@@ -369,7 +411,7 @@ onMounted(() => {
   }
 
   .fc-event-title {
-    @apply font-medium;
+    @apply font-medium text-ellipsis;
   }
 
   .fc-event-time {

@@ -13,19 +13,21 @@ export function useDatabase() {
     try {
       const response = await fetch('https://api.elevenlabs.io/v1/convai/agents', {
         headers: {
-          'xi-api-key': useRuntimeConfig().public.ELEVENLABS_API_KEY
-        }
+          'xi-api-key': useRuntimeConfig().public.ELEVENLABS_API_KEY,
+        },
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to fetch agents');
       }
 
       const data: AgentsResponse = await response.json();
       agents.value = data.agents;
-    } catch (e) {
+    }
+    catch (e) {
       error.value = e instanceof Error ? e.message : 'An error occurred';
-    } finally {
+    }
+    finally {
       loading.value = false;
     }
   };
@@ -36,19 +38,21 @@ export function useDatabase() {
     try {
       const response = await fetch('https://api.elevenlabs.io/v1/convai/knowledge-base', {
         headers: {
-          'xi-api-key': useRuntimeConfig().public.ELEVENLABS_API_KEY
-        }
+          'xi-api-key': useRuntimeConfig().public.ELEVENLABS_API_KEY,
+        },
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to fetch documents');
       }
 
       const data: DocumentsResponse = await response.json();
       documents.value = data.documents;
-    } catch (e) {
+    }
+    catch (e) {
       error.value = e instanceof Error ? e.message : 'An error occurred';
-    } finally {
+    }
+    finally {
       loading.value = false;
     }
   };
@@ -58,10 +62,10 @@ export function useDatabase() {
       const response = await fetch(`https://api.elevenlabs.io/v1/convai/knowledge-base/${documentId}/content`, {
         headers: {
           'xi-api-key': useRuntimeConfig().public.ELEVENLABS_API_KEY,
-          'Accept': 'text/plain' // Request plain text instead of JSON
-        }
+          'Accept': 'text/plain', // Request plain text instead of JSON
+        },
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to fetch document content');
       }
@@ -69,7 +73,8 @@ export function useDatabase() {
       // Get the response as text instead of trying to parse as JSON
       const content = await response.text();
       return content;
-    } catch (e) {
+    }
+    catch (e) {
       throw new Error(e instanceof Error ? e.message : 'Failed to fetch document content');
     }
   };
@@ -81,18 +86,20 @@ export function useDatabase() {
       const response = await fetch(`https://api.elevenlabs.io/v1/convai/knowledge-base/${documentId}`, {
         method: 'DELETE',
         headers: {
-          'xi-api-key': useRuntimeConfig().public.ELEVENLABS_API_KEY
-        }
+          'xi-api-key': useRuntimeConfig().public.ELEVENLABS_API_KEY,
+        },
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to delete document');
       }
 
       documents.value = documents.value.filter(doc => doc.id !== documentId);
-    } catch (e) {
+    }
+    catch (e) {
       error.value = e instanceof Error ? e.message : 'An error occurred';
-    } finally {
+    }
+    finally {
       loading.value = false;
     }
   };
@@ -105,19 +112,21 @@ export function useDatabase() {
         method: 'POST',
         headers: {
           'xi-api-key': useRuntimeConfig().public.ELEVENLABS_API_KEY,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ url })
+        body: JSON.stringify({ url }),
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to add URL document');
       }
 
       await fetchDocuments();
-    } catch (e) {
+    }
+    catch (e) {
       error.value = e instanceof Error ? e.message : 'An error occurred';
-    } finally {
+    }
+    finally {
       loading.value = false;
     }
   };
@@ -130,19 +139,21 @@ export function useDatabase() {
         method: 'POST',
         headers: {
           'xi-api-key': useRuntimeConfig().public.ELEVENLABS_API_KEY,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ text })
+        body: JSON.stringify({ text }),
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to add text document');
       }
 
       await fetchDocuments();
-    } catch (e) {
+    }
+    catch (e) {
       error.value = e instanceof Error ? e.message : 'An error occurred';
-    } finally {
+    }
+    finally {
       loading.value = false;
     }
   };
@@ -157,19 +168,21 @@ export function useDatabase() {
       const response = await fetch('https://api.elevenlabs.io/v1/convai/knowledge-base/file', {
         method: 'POST',
         headers: {
-          'xi-api-key': useRuntimeConfig().public.ELEVENLABS_API_KEY
+          'xi-api-key': useRuntimeConfig().public.ELEVENLABS_API_KEY,
         },
-        body: formData
+        body: formData,
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to add file document');
       }
 
       await fetchDocuments();
-    } catch (e) {
+    }
+    catch (e) {
       error.value = e instanceof Error ? e.message : 'An error occurred';
-    } finally {
+    }
+    finally {
       loading.value = false;
     }
   };
@@ -182,17 +195,17 @@ export function useDatabase() {
         method: 'PUT',
         headers: {
           'xi-api-key': useRuntimeConfig().public.ELEVENLABS_API_KEY,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           conversation_config: {
             agent: {
               prompt: {
-                knowledge_base: documentIds
-              }
-            }
-          }
-        })
+                knowledge_base: documentIds,
+              },
+            },
+          },
+        }),
       });
 
       if (!response.ok) {
@@ -200,9 +213,11 @@ export function useDatabase() {
       }
 
       await fetchDocuments();
-    } catch (e) {
+    }
+    catch (e) {
       error.value = e instanceof Error ? e.message : 'An error occurred';
-    } finally {
+    }
+    finally {
       loading.value = false;
     }
   };
@@ -219,6 +234,6 @@ export function useDatabase() {
     addTextDocument,
     addFileDocument,
     updateAgentKnowledgeBase,
-    getDocumentContent
+    getDocumentContent,
   };
 }

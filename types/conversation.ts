@@ -13,6 +13,17 @@ export interface ConversationDetails {
   agent_id: string;
   conversation_id: string;
   status: string;
+  conversation_initiation_client_data: {
+    dynamic_variables: {
+      system__agent_id: string;
+      system__call_duration_secs: string;
+      system__call_sid: string;
+      system__called_number: string;
+      system__caller_id: string;
+      system__conversation_id: string;
+      system__time_utc: string;
+    };
+  };
   transcript: Array<{
     role: 'agent' | 'user';
     message: string;
@@ -49,6 +60,11 @@ export interface ConversationDetails {
   analysis?: {
     call_successful: 'success' | 'failure' | 'unknown';
     transcript_summary: string;
+    data_collection_results: Record<string, {
+      data_collection_id: string;
+      rationale: string;
+      value: string;
+    }>;
   };
   audio_url?: string;
 }
