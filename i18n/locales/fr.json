@@ -1,0 +1,54 @@
+{
+  "common": {
+    "appName": "Votre application",
+    "allRightsReserved": "Tous droits réservés",
+    "english": "English",
+    "french": "Français",
+    "lightMode": "Mode clair",
+    "darkMode": "Mode sombre",
+    "termsOfService": "Conditions d'utilisation",
+    "privacyPolicy": "Politique de confidentialité",
+    "contact": "Contact",
+    "confirm": "Confirmer",
+    "cancel": "Annuler",
+    "error": "Une erreur est survenue",
+    "save": "Sauvegarder"
+  },
+  "navigation": {
+    "calendar": "Calendrier",
+    "conversation": "Conversation",
+    "database": "Base de données"
+  },
+  "home": {
+    "title": "Accueil",
+    "calendar": {
+      "title": "Calendrier",
+      "description": "Gérez vos rendez-vous et votre emploi du temps"
+    },
+    "conversation": {
+      "title": "Conversation",
+      "description": "Démarrez une nouvelle conversation"
+    },
+    "database": {
+      "title": "Base de données",
+      "description": "Accédez et gérez vos données"
+    }
+  },
+  "calendar": {
+    "title": "Calendrier",
+    "upcoming": "Prochains rendez-vous",
+    "noEvents": "Aucun rendez-vous à venir"
+  },
+  "conversation": {
+    "title": "Conversations",
+    "startNew": "Nouvelle conversation",
+    "typeMessage": "Tapez votre message...",
+    "refresh": "Actualiser",
+    "loading": "Chargement..."
+  },
+  "database": {
+    "title": "Base de données",
+    "records": "Enregistrements",
+    "noRecords": "Aucun enregistrement trouvé"
+  }
+}

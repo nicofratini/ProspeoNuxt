@@ -1,0 +1,54 @@
+{
+  "common": {
+    "appName": "Your app",
+    "allRightsReserved": "All rights reserved",
+    "english": "English",
+    "french": "Français",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "contact": "Contact",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "error": "An error occurred",
+    "save": "Save"
+  },
+  "navigation": {
+    "calendar": "Calendar",
+    "conversation": "Conversation",
+    "database": "Database"
+  },
+  "home": {
+    "title": "Home",
+    "calendar": {
+      "title": "Calendar",
+      "description": "Manage your schedule and appointments"
+    },
+    "conversation": {
+      "title": "Conversation",
+      "description": "Start a new conversation"
+    },
+    "database": {
+      "title": "Database",
+      "description": "Access and manage your data"
+    }
+  },
+  "calendar": {
+    "title": "Calendar",
+    "upcoming": "Upcoming appointments",
+    "noEvents": "No upcoming appointments"
+  },
+  "conversation": {
+    "title": "Conversations",
+    "startNew": "New conversation",
+    "typeMessage": "Type your message...",
+    "refresh": "Refresh",
+    "loading": "Loading..."
+  },
+  "database": {
+    "title": "Database",
+    "records": "Records",
+    "noRecords": "No records found"
+  }
+}
